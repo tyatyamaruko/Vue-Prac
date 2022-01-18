@@ -9,9 +9,25 @@
 </head>
 <body>
     <div id="app">
-        <p>{{ message }}</p>
+        <p v-text="message"></p>
+        <a v-bind:href="url">WINGSプロジェクト</a>
+        <input type="button" value="click here" v-bind:disabled="flag" >
+        <p>{{ localEmail() }}</p>
+
+        <form action="">
+            <input type="button" value="click here" v-on:click="onclick">
+        </form>
+        <div>算出プロパティ : {{ randomc }}</div>
+        <div>メソッド : {{ randomm() }}</div>
+        <div>現在日時 : {{ current }}</div>
+        <p>現在時刻 : {{ current.toLocaleString() }}</p>
+
+
+        <input type="text" name="" v-model="name" id="">
+        <p>Entered Data: {{ upperName }}</p>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./js/script.js"></script>
 </body>
 </html>
