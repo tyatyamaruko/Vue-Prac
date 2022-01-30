@@ -1,61 +1,65 @@
-let app = new Vue({
-    el: "#app",
-    data: {
-        message: 'みなさん、こんにちは',
-        url: 'https://wings.msn.to/',
-        flag: true,
-        email: 'Y-Suzuki@example.com',
-        current: new Date().toLocaleString(),
-        author: {
-            name: 'Yamada',
-        },
-        name: '',
-        upperName: '',
-    },
-    created: function() {
-        let that = this;
-        this.timer = setInterval(function() {
-            that.current = new Date();
-        }, 1000);
-        this.delayFunc = _.debounce(this.getUpper, 2000);
-    },
-    watch: {
-        
-    },
-    mounted: function() {
-        Vue.set(this.author, 'company', 'WINGSプロジェクト');
-        let that = this;
-        this.$nextTick().then(function() {
-            console.log(that.$el.textContext.includes(this.author.company));
-        });
-        
-    },
-    beforeDestroy: function() {
-        clearInterval(this.timer);
-    },
-    computed: {
-        // localEmail: function() {
-        //     return this.email.split('@')[0].toLowerCase();
-        // },
-        randomc: function() {
-            return Math.random();
-        },
-        upperName: function() {
-            return this.name.toUpperCase();
+// Vue.component('my-hello', {
+//     template: '<div>こんにちは、{{name}}</div>',
+//     data: function() {
+//         return {
+//             name: 'Vue.js',
+//         }
+//     }
+// });
+
+// let MyHello = {
+//     props: [
+//         'yourName'
+//     ],
+//     template: `<div>こんにちは、{{yourName}}</div>!`,
+//     // data: function() {
+//     //     return {
+//     //         name: 'Vue.js',
+//     //     }
+//     // }
+// }
+
+let MyCounter = {
+    props: [
+        'init',
+        'step',
+    ],
+    template: `<div>現在地は{{ step }}
+    <button @click="onclick">UP</button></div>`,
+    data: function() {
+        return {
+            current: this.init,
         }
     },
     methods: {
-        localEmail: function() {
-            return this.email.split('@')[0].toLowerCase();
-        },
-        randomm: function() {
-            return Math.random();
-        },
         onclick: function() {
-            this.current = new Date().toLocaleString();
-        },
-        getUpper: function() {
-            this.upperName = this.name.toUpperCase();
+            this.$emit('plus', Number(this.step))
+        }
+    }
+}
+
+let MyHello = {
+    props: {
+        yourName: {
+            type: String,
+            required: true,
+        }
+    },
+    template: `<div title="result" class="main">Hello Vue.js! Mr.{{yourName}}</div>`
+}
+
+new Vue({
+    el: "#app",
+    components: {
+        'my-counter': MyCounter,
+        'my-hello': MyHello
+    },
+    data: {
+        current: 0
+    },
+    methods: {
+        onplus(value) {
+            this.current += value;
         }
     }
 });
